@@ -4,7 +4,7 @@ const { createdOrder } = require("../controllers/productInOrder.controller");
 const router = Router();
 
  
-router.post("/:userId", createdOrder);
+router.get("/:userId", createdOrder);
 
 
 module.exports = router; 

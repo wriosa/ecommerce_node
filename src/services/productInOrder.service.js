@@ -15,6 +15,8 @@ class ProductInOrderService {
       throw error;
     }
   }
+
+  
 }
 
 module.exports = ProductInOrderService;

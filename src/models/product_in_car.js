@@ -23,7 +23,7 @@ module.exports = (sequelize, DataTypes) => {
  *       properties:
  *         message:
  *           type: string
- *           example: Product added to cart
+ *           example: Product added to cart or product updated in cart
  *     addproductincarresponseerror:
  *       type: object
  *       properties:
