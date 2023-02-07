@@ -15,7 +15,8 @@ class order extends Sequelize.Model {
     },
     totalPrice: {
       type: DataTypes.DOUBLE,
-      allowNull: false
+      allowNull: false,
+      defaultValue: 0
     },
     userId: {
       type: DataTypes.INTEGER,
@@ -27,7 +28,8 @@ class order extends Sequelize.Model {
     },
     status: {
       type: DataTypes.BOOLEAN,
-      allowNull: false
+      allowNull: false,
+      defaultValue: true
     }
   }, {
     sequelize,

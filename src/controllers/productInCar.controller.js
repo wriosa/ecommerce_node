@@ -10,16 +10,23 @@ const addProcuctInCar = async (req, res, next) => {
     const {price} = product;
     const {userId} = req.params;
     const car = await CarService.getAll(userId);
-    const {id, totalPrice} = car;
-    const productInCar = await ProductInCarService.add(id, productId,quantity,price,status)
-    if(productInCar){
-      const {cartId,price, productId, quantity} = productInCar;
-      await CarService.update(cartId,price)
-      await ProductServices.update(productId, quantity)
-      res.status(201).json({message: "Product added to cart"});
+    const {id} = car;
+    const findProductIncCar = await ProductInCarService.find(productId, id);
+    console.log(findProductIncCar);
+    if(!findProductIncCar){
+      const productInCar = await ProductInCarService.add(id,productId,quantity,price,status)
+      if(productInCar){
+        const {cartId,price, productId, quantity} = productInCar;
+        await CarService.update(cartId,price)
+        await ProductServices.update(productId, quantity)
+        res.status(201).json({message: "Product added to cart"});
+      }   
+    }else{
+      const {productId} = findProductIncCar;
+      await ProductInCarService.update(productId,quantity,price);
+      res.status(201).json({message: "Product update in the cart"});
     }       
   } catch (error) {
-    //res.status(400).json(error.message);
     next(error);
   }
 };
@@ -28,21 +35,14 @@ const getProductsUser= async (req,res, next)=>{
   try {
     const {userId} = req.params;
     const car = await CarService.getAll(userId);
-    // console.log(car)
     if(car){
       const {id} = car;
-      // console.log(id)
       const result = await ProductInCarService.getProductsInCar(id);
       console.log(result)
       res.json(result);
-      // res.json({
-      //     message: "Listando los productos que tiene el usuario en el carrito",
-      //     data: result,
-      // });
     }
     
   } catch (error) {
-    //res.status(400).json(error.message);
     next(error);
   }
 }
